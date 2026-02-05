@@ -42,5 +42,22 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, user *User
 	user.Email = r.FormValue("email")
 	println(user.Pseudo, user.Motdepasse, user.Email)
 
+	///////////////////////////////////////////////////////
+	// REQUETE SQL POUR envoyer INFO sur base donnée	 //
+	///////////////////////////////////////////////////////
+
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func SubmitConnectionHandler(w http.ResponseWriter, r *http.Request) {
+	pseudo := r.FormValue("pseudo")
+	motdepasse := r.FormValue("mdp")
+
+	///////////////////////////////////////////////////////////
+	// REQUETE SQL POUR recup INFO base donnée pseudo et mdp //
+	///////////////////////////////////////////////////////////
+
+	println(pseudo, motdepasse)
+
 	http.Redirect(w, r, "/", http.StatusFound)
 }

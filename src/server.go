@@ -24,6 +24,10 @@ func Server() {
 		SubmitInscriptionHandler(w, r, &user)
 	})
 
+	http.HandleFunc("/submit_inscription", func(w http.ResponseWriter, r *http.Request) {
+		SubmitConnectionHandler(w, r)
+	})
+
 	fs := http.FileServer(http.Dir("./static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
