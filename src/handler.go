@@ -26,8 +26,8 @@ func InscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func ConnexionHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("pages/connexion.html")
+func ConnectionHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("pages/connection.html")
 
 	if err != nil {
 		log.Fatal(err)
@@ -42,6 +42,8 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, user *User
 	user.Email = r.FormValue("email")
 	println(user.Pseudo, user.Motdepasse, user.Email)
 
+	AddCookie(w)
+
 	///////////////////////////////////////////////////////
 	// REQUETE SQL POUR envoyer INFO sur base donnée	 //
 	///////////////////////////////////////////////////////
@@ -54,10 +56,26 @@ func SubmitConnectionHandler(w http.ResponseWriter, r *http.Request) {
 	motdepasse := r.FormValue("mdp")
 
 	///////////////////////////////////////////////////////////
-	// REQUETE SQL POUR recup INFO base donnée pseudo et mdp //
+	// REQUETE SQL POUR recup INFO base donnée pseudo		 //
+	///////////////////////////////////////////////////////////
+
+	// si pseudo existe
+
+	///////////////////////////////////////////////////////////
+	// REQUETE SQL POUR recup INFO base donnée mdp //
 	///////////////////////////////////////////////////////////
 
 	println(pseudo, motdepasse)
+
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func RetourHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func SubmitDeconnectionHandler(w http.ResponseWriter, r *http.Request) {
+	DeleteCookie(w)
 
 	http.Redirect(w, r, "/", http.StatusFound)
 }
