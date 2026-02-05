@@ -1,0 +1,32 @@
+package pokemon
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func Server() {
+	user := InitUser()
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		HomeHandler(w, r)
+	})
+
+	http.HandleFunc("/inscription", func(w http.ResponseWriter, r *http.Request) {
+		InscriptionHandler(w, r)
+	})
+
+	http.HandleFunc("/connexion", func(w http.ResponseWriter, r *http.Request) {
+		ConnexionHandler(w, r)
+	})
+
+	http.HandleFunc("/submit_inscription", func(w http.ResponseWriter, r *http.Request) {
+		SubmitInscriptionHandler(w, r, &user)
+	})
+
+	fs := http.FileServer(http.Dir("./static/"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	fmt.Println("Serveur lancer sur 127.0.0.1:8080")
+	http.ListenAndServe("0.0.0.0:8080", nil)
+}
