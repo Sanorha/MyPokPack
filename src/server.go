@@ -7,6 +7,7 @@ import (
 
 func Server() {
 	user := InitUser()
+	CreateTableone()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		HomeHandler(w, r)
@@ -24,7 +25,7 @@ func Server() {
 		SubmitInscriptionHandler(w, r, &user)
 	})
 
-	http.HandleFunc("/submit_inscription", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/submit_connexion", func(w http.ResponseWriter, r *http.Request) {
 		SubmitConnectionHandler(w, r)
 	})
 
