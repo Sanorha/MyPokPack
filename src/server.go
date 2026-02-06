@@ -17,10 +17,6 @@ func Server() {
 		InscriptionHandler(w, r)
 	})
 
-	http.HandleFunc("/connexion", func(w http.ResponseWriter, r *http.Request) {
-		ConnexionHandler(w, r)
-	})
-
 	http.HandleFunc("/submit_inscription", func(w http.ResponseWriter, r *http.Request) {
 		SubmitInscriptionHandler(w, r, &user)
 	})
