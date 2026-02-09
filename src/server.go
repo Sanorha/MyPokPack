@@ -6,7 +6,6 @@ import (
 )
 
 func Server() {
-	user := InitUser()
 	CreateTableone()
 
 	// affiche index.html
@@ -26,7 +25,7 @@ func Server() {
 
 	// recup, pseudo, mail, mdp, hash, créer cookie, redirige sur /
 	http.HandleFunc("/submit_inscription", func(w http.ResponseWriter, r *http.Request) {
-		SubmitInscriptionHandler(w, r, &user)
+		SubmitInscriptionHandler(w, r)
 	})
 
 	// recup, pseudo, mdp, compare hash et mdp, créer cookie, redirige sur
@@ -48,5 +47,5 @@ func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	fmt.Println("Serveur lancer sur 127.0.0.1:8080")
-	http.ListenAndServe("0.0.0.0:8080", nil)
+	http.ListenAndServe(":8080", nil)
 }
