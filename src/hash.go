@@ -4,12 +4,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-const secretPepper = "C:h6_yzI-2/$zjé)dW,;!zk84gPù%"
+const pepper = "C:h6_yzI-2/$zjé)dW,;!zk84gPù%"
 
 func CreateHashMDP(password string) (string, error) {
-	password_pepper := password + secretPepper
+	password_pepper := password + pepper
 
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password_pepper), 20)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password_pepper), 14)
 
 	return string(bytes), err
 }

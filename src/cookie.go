@@ -4,15 +4,10 @@ import (
 	"net/http"
 )
 
-func AddCookie(w http.ResponseWriter) {
-
-	///////////////////////////////////////////////////////
-	// REQUETE SQL POUR RECUP ID						 //
-	///////////////////////////////////////////////////////
-
+func AddCookie(w http.ResponseWriter, pseudo string) {
 	cookie := &http.Cookie{
 		Name:  "cookie",
-		Value: "toto",
+		Value: pseudo,
 		Path:  "/",
 	}
 

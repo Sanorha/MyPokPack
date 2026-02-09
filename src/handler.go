@@ -36,18 +36,23 @@ func ConnectionHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, user *User) {
-	user.Pseudo = r.FormValue("pseudo")
-	user.Motdepasse = r.FormValue("mdp")
-	user.Email = r.FormValue("email")
-	println(user.Pseudo, user.Motdepasse, user.Email)
-	TableUser(&user.Pseudo, &user.Motdepasse, &user.Email)
+func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
+	pseudo := r.FormValue("pseudo")
+	motdepasse := r.FormValue("mdp")
+	email := r.FormValue("email")
 
-	AddCookie(w)
+	motdepasse_hash, err := CreateHashMDP(motdepasse)
 
-	///////////////////////////////////////////////////////
-	// REQUETE SQL POUR envoyer INFO sur base donnée	 //
-	///////////////////////////////////////////////////////
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	motdepasse = motdepasse_hash
+
+	println(pseudo, email, motdepasse)
+
+	AddUser(pseudo, email, motdepasse)
+	AddCookie(w, pseudo)
 
 	http.Redirect(w, r, "/", http.StatusFound)
 }
