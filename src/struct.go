@@ -10,11 +10,6 @@ type Jeux struct {
 	Types string `json:"types"`
 }
 
-type Jeux struct {
-	Name  string `json:"name"`
-	Types string `json:"types"`
-}
-
 func InitUser() User {
 	return User{}
 }
