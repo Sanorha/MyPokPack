@@ -52,7 +52,7 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, user *User
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func SubmitConnectionHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitConnectionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux) {
 	pseudo := r.FormValue("pseudo")
 	motdepassehash := r.FormValue("mdp")
 	println(pseudo, motdepassehash)

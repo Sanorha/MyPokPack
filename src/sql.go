@@ -19,8 +19,8 @@ func CreateTableone() {
 
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	Username TEXT NOT NULL UNIQUE,
-	Email TEXT NOT NULL UNIQUE,
-	Motdepasse TEXT  NOT NULL
+	Motdepasse TEXT  NOT NULL,
+	Email TEXT NOT NULL UNIQUE
 
 		);`
 
@@ -45,15 +45,15 @@ func CreateTableone() {
 		log.Fatal(err)
 	}
 }
-func TableUser(Pseudo *string, Email *string, Motdepasse *string) {
+func TableUser(Pseudo *string, Motdepasse *string, Email *string) {
 	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	_, err = db.Exec(`INSERT INTO user (Username, Email , Motdepasse) 
-     VALUES(?, ?, ?);`, Pseudo, Email, Motdepasse)
+	_, err = db.Exec(`INSERT INTO user (Username , Motdepasse ,Email) 
+     VALUES(?, ?, ?);`, Pseudo, Motdepasse, Email)
 	if err != nil {
 		log.Fatal(err)
 	}
