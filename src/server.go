@@ -6,7 +6,6 @@ import (
 )
 
 func Server() {
-	user := InitUser()
 	Jeux := InitJeux()
 	CreateTableone()
 
