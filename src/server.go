@@ -7,6 +7,7 @@ import (
 
 func Server() {
 	user := InitUser()
+	Jeux := InitJeux()
 	CreateTableone()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +23,7 @@ func Server() {
 	})
 
 	http.HandleFunc("/submit_connexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitConnectionHandler(w, r)
+		SubmitConnectionHandler(w, r, &Jeux)
 	})
 
 	fs := http.FileServer(http.Dir("./static/"))
