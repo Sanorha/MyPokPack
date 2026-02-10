@@ -36,17 +36,12 @@ func Server() {
 
 	// supprime le cookie, redirige sur /
 	http.HandleFunc("/deconnexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitDeconnectionHandler(w, r)
+		SubmitDeconnexionHandler(w, r)
 	})
 
 	// bontou retour redirige sur /
 	http.HandleFunc("/retour", func(w http.ResponseWriter, r *http.Request) {
 		RetourHandler(w, r)
-	})
-
-	// supprime le cookie, redirige sur /
-	http.HandleFunc("/deconnexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitDeconnectionHandler(w, r)
 	})
 
 	fs := http.FileServer(http.Dir("./static/"))
