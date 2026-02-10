@@ -59,7 +59,7 @@ func AddUser(Pseudo string, Email string, Motdepasse string) {
 	}
 }
 
-func SearchSQL(pseudo string) string {
+func SearchUserSQL(pseudo string) string {
 	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
 
 	if err != nil {
@@ -83,7 +83,11 @@ func SearchSQL(pseudo string) string {
 	return motdepasse_sql
 }
 
+func SearchJeuxSQL() {
+
+}
+
 /////////////// requete base jeux ajouter image //////////
-/////////////// voix max pokemon /////////////////////////
+/////////////// voir max pokemon /////////////////////////
 /////////////// faire fonction random/////////////////////
 /////////////// https://pokeapi.co/api/v2/pokemon/1 //////

@@ -65,7 +65,7 @@ func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux, 
 	pseudo := r.FormValue("pseudo")
 	motdepasse := r.FormValue("mdp")
 
-	var motdepasse_sql string = SearchSQL(pseudo)
+	var motdepasse_sql string = SearchUserSQL(pseudo)
 
 	if motdepasse_sql == "" {
 		check.Check_pseudo = true

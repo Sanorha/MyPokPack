@@ -11,6 +11,8 @@ func Server() {
 
 	CreateTableone()
 
+	// Affiche(&jeux)
+
 	// affiche index.html
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		HomeHandler(w, r, &check)
