@@ -1,19 +1,20 @@
 package pokemon
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"text/template"
 )
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+func HomeHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	tmpl, err := template.ParseFiles("index.html")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, check)
 }
 
 func InscriptionHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,55 +27,79 @@ func InscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func ConnectionHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("pages/connection.html")
+func ConnexionHandler(w http.ResponseWriter, r *http.Request, check *Check) {
+	tmpl, err := template.ParseFiles("pages/connexion.html")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, check)
 }
 
-func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, user *User) {
-	user.Pseudo = r.FormValue("pseudo")
-	user.Motdepasse = r.FormValue("mdp")
-	user.Email = r.FormValue("email")
-	println(user.Pseudo, user.Motdepasse, user.Email)
-	TableUser(&user.Pseudo, &user.Motdepasse, &user.Email)
-
-	AddCookie(w)
-
-	///////////////////////////////////////////////////////
-	// REQUETE SQL POUR envoyer INFO sur base donnée	 //
-	///////////////////////////////////////////////////////
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func SubmitConnectionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux) {
+func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	pseudo := r.FormValue("pseudo")
-	motdepassehash := r.FormValue("mdp")
-	println(pseudo, motdepassehash)
+	motdepasse := r.FormValue("mdp")
+	email := r.FormValue("email")
+
+	motdepasse_hash, err := CreateHashMDP(motdepasse)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	motdepasse = motdepasse_hash
+
+	println(pseudo, email, motdepasse)
+
+	AddUser(pseudo, email, motdepasse)
+	AddCookie(w, pseudo)
+
 	http.Redirect(w, r, "/", http.StatusFound)
+}
 
-	///////////////////////////////////////////////////////////
-	// REQUETE SQL POUR recup INFO base donnée pseudo		 //
-	///////////////////////////////////////////////////////////
+func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux, check *Check) {
+	check.Check_pseudo = false
+	check.Check_mdp = false
 
-	// si pseudo existe
+	pseudo := r.FormValue("pseudo")
+	motdepasse := r.FormValue("mdp")
 
-	///////////////////////////////////////////////////////////
-	// REQUETE SQL POUR recup INFO base donnée mdp //
-	///////////////////////////////////////////////////////////
+	var motdepasse_sql string = SearchSQL(pseudo)
+
+	if motdepasse_sql == "" {
+		check.Check_pseudo = true
+		fmt.Println("pb pseudo")
+		http.Redirect(w, r, "/connexion", http.StatusFound)
+
+	} else {
+		var check_mdp bool = CompareMDP(motdepasse, motdepasse_sql)
+
+		if check_mdp {
+			AddCookie(w, pseudo)
+			check.Check_connexion = true
+			http.Redirect(w, r, "/", http.StatusFound)
+		} else {
+			check.Check_mdp = true
+			http.Redirect(w, r, "/connexion", http.StatusFound)
+		}
+	}
 }
 
 func RetourHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func SubmitDeconnectionHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitDeconnexionHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	DeleteCookie(w)
-
+	check.Check_connexion = false
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+
+func CollectionHandler(w http.ResponseWriter, r *http.Request) {
+
+	/////////////// afficher collection ///////////////////
+}
+
+/////////////// handler ouvrir ///////////////////
+/////////////// ajout base sql ///////////////////

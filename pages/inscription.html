@@ -15,13 +15,13 @@
         <div class="menu">
             <button class="jeux" type="button">Menu dresseur ▼</button>
             <div class="menu-content">
-                <a href="/collection">Ma Collection</a>
                 <a href="/inscription">Inscription</a>
                 <a href="/connexion">Connexion</a>
                 <a href="/deconnexion">Déconnexion</a>
+                <a href="/retour">Retour</a>
             </div>
         </div>
-        </nav> 
+    </nav> 
 
     <form action="/submit_inscription" method="post">
         <div class="from">
@@ -36,36 +36,35 @@
     <img src="https://pokemonletsgo.pokemon.com/assets/img/common/char-pikachu.png">
     <img class="ectoplasma" src="https://www.pokepedia.fr/images/thumb/8/8d/Ectoplasma-RFVF.png/800px-Ectoplasma-RFVF.png">
     <script>
-function createBall() {
-    const container = document.querySelector('.falling-container');
-    if(!container) return; 
+        function createBall() {
+            const container = document.querySelector('.falling-container');
 
-    const ball = document.createElement('img');
-    ball.className = 'falling-item';
-    
-       const mesImages = [
-    "https://images.pokemontcg.io/base1/4_hires.png", 
-    "https://images.pokemontcg.io/base1/15_hires.png",
-    "https://images.pokemontcg.io/swsh4/44_hires.png", 
-    "https://images.pokemontcg.io/sm12/75_hires.png",  
-];
+            if(!container) return; 
 
-    const indexAuHasard = Math.floor(Math.random() * mesImages.length);
-    ball.src = mesImages[indexAuHasard];
-    
-    ball.style.left = Math.random() * 100 + "vw";
-    ball.style.animationDuration = (Math.random() * 3 + 4) + "s"; 
-    ball.style.width = "40px"; 
-    ball.style.height = "auto";
-    
-    container.appendChild(ball);
+            const ball = document.createElement('img');
+            ball.className = 'falling-item';
+            
+            const mesImages = [
+            "https://images.pokemontcg.io/base1/4_hires.png", 
+            "https://images.pokemontcg.io/base1/15_hires.png",
+            "https://images.pokemontcg.io/swsh4/44_hires.png", 
+            "https://images.pokemontcg.io/sm12/75_hires.png",  
+            ];
 
-    setTimeout(() => { ball.remove(); }, 5000);
-}
-setInterval(createBall, 900);
-</script>
-<form action="/retour" method="post">
-        <button  class="btn" type="submit">Retour</button>
-        </from>
+            const indexAuHasard = Math.floor(Math.random() * mesImages.length);
+            ball.src = mesImages[indexAuHasard];
+            
+            ball.style.left = Math.random() * 100 + "vw";
+            ball.style.animationDuration = (Math.random() * 3 + 4) + "s"; 
+            ball.style.width = "40px"; 
+            ball.style.height = "auto";
+            
+            container.appendChild(ball);
+
+            setTimeout(() => { ball.remove(); }, 5000);
+        }
+
+        setInterval(createBall, 900);
+    </script>
 </body>
 </html>
