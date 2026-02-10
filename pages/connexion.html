@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="icon" href="https://i.pinimg.com/736x/85/9e/03/859e0396b1c628832ba6b7c47c4a95b5.jpg">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="https://i.pinimg.com/736x/85/9e/03/859e0396b1c628832ba6b7c47c4a95b5.jpg">
 
     <title>Document</title>
 </head>
@@ -34,5 +35,17 @@
 
         <button type="submit">Envoyer</button>
     </form>
+
+    <span>
+    {{ if .Check_pseudo }}
+        Utilisateur incorrect ou non inscrit
+    {{ end }}
+    </span><br>
+
+    <span>
+    {{ if .Check_mdp }}
+        Mot de passe incorrect
+    {{ end }}
+    </span>
 </body>
 </html>

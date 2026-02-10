@@ -2,7 +2,6 @@ package pokemon
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -78,10 +77,8 @@ func SearchSQL(pseudo string) string {
 		WHERE Username = ?;`, pseudo).Scan(&username_sql, &motdepasse_sql)
 
 	if err != nil {
-		log.Fatal(err)
+		return ""
 	}
-
-	fmt.Println("Resultat base sql : ", username_sql, motdepasse_sql)
 
 	return motdepasse_sql
 }

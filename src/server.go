@@ -6,7 +6,9 @@ import (
 )
 
 func Server() {
-	Jeux := InitJeux()
+	jeux := InitJeux()
+	check := InitCheck()
+
 	CreateTableone()
 
 	// affiche index.html
@@ -21,7 +23,7 @@ func Server() {
 
 	// affiche connection.html
 	http.HandleFunc("/connexion", func(w http.ResponseWriter, r *http.Request) {
-		ConnexionHandler(w, r)
+		ConnexionHandler(w, r, &check)
 	})
 
 	// recup, pseudo, mail, mdp, hash, créer cookie, redirige sur /
@@ -31,7 +33,7 @@ func Server() {
 
 	// recup, pseudo, mdp, compare hash et mdp, créer cookie, redirige sur
 	http.HandleFunc("/submit_connexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitConnexionHandler(w, r, &Jeux)
+		SubmitConnexionHandler(w, r, &jeux, &check)
 	})
 
 	// supprime le cookie, redirige sur /

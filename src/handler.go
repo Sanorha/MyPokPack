@@ -27,14 +27,14 @@ func InscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func ConnexionHandler(w http.ResponseWriter, r *http.Request) {
+func ConnexionHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	tmpl, err := template.ParseFiles("pages/connexion.html")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, check)
 }
 
 func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,21 +58,31 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux) {
+func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux, check *Check) {
+	check.Check_pseudo = false
+	check.Check_mdp = false
+
 	pseudo := r.FormValue("pseudo")
 	motdepasse := r.FormValue("mdp")
-	println("Pseud et mdp : ", pseudo, motdepasse)
 
-	motdepasse_sql := SearchSQL(pseudo)
+	var motdepasse_sql string = SearchSQL(pseudo)
 
-	var check_mdp bool = CompareMDP(motdepasse, motdepasse_sql)
+	if motdepasse_sql == "" {
+		check.Check_pseudo = true
+		fmt.Println("pb pseudo")
+		http.Redirect(w, r, "/connexion", http.StatusFound)
 
-	fmt.Println("Bool : ", check_mdp)
+	} else {
+		var check_mdp bool = CompareMDP(motdepasse, motdepasse_sql)
 
-	///////////////////////////////////////////////////////////
-	// Gestion comparaison mdp et redirect, et message html  //
-	///////////////////////////////////////////////////////////
-	http.Redirect(w, r, "/", http.StatusFound)
+		if check_mdp {
+			AddCookie(w, pseudo)
+			http.Redirect(w, r, "/", http.StatusFound)
+		} else {
+			check.Check_mdp = true
+			http.Redirect(w, r, "/connexion", http.StatusFound)
+		}
+	}
 }
 
 func RetourHandler(w http.ResponseWriter, r *http.Request) {

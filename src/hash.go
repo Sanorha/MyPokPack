@@ -1,8 +1,6 @@
 package pokemon
 
 import (
-	"fmt"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -20,8 +18,6 @@ func CompareMDP(motdepasse string, motdepasse_sql string) bool {
 	motdepasse += pepper
 
 	err := bcrypt.CompareHashAndPassword([]byte(motdepasse_sql), []byte(motdepasse))
-
-	fmt.Println("mdp compare : ", err, motdepasse, motdepasse_sql)
 
 	if err == nil {
 		return true
