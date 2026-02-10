@@ -20,8 +20,8 @@ func Server() {
 	})
 
 	// affiche connection.html
-	http.HandleFunc("/connection", func(w http.ResponseWriter, r *http.Request) {
-		ConnectionHandler(w, r)
+	http.HandleFunc("/connexion", func(w http.ResponseWriter, r *http.Request) {
+		ConnexionHandler(w, r)
 	})
 
 	// recup, pseudo, mail, mdp, hash, créer cookie, redirige sur /
@@ -31,7 +31,7 @@ func Server() {
 
 	// recup, pseudo, mdp, compare hash et mdp, créer cookie, redirige sur
 	http.HandleFunc("/submit_connexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitConnectionHandler(w, r, &Jeux)
+		SubmitConnexionHandler(w, r, &Jeux)
 	})
 
 	// supprime le cookie, redirige sur /
@@ -45,7 +45,7 @@ func Server() {
 	})
 
 	// supprime le cookie, redirige sur /
-	http.HandleFunc("/deconnection", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/deconnexion", func(w http.ResponseWriter, r *http.Request) {
 		SubmitDeconnectionHandler(w, r)
 	})
 

@@ -1,6 +1,7 @@
 package pokemon
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"text/template"
@@ -26,8 +27,8 @@ func InscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func ConnectionHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("pages/connection.html")
+func ConnexionHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("pages/connexion.html")
 
 	if err != nil {
 		log.Fatal(err)
@@ -57,28 +58,28 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func SubmitConnectionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux) {
+func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux) {
 	pseudo := r.FormValue("pseudo")
-	motdepassehash := r.FormValue("mdp")
-	println(pseudo, motdepassehash)
+	motdepasse := r.FormValue("mdp")
+	println("Pseud et mdp : ", pseudo, motdepasse)
+
+	motdepasse_sql := SearchSQL(pseudo)
+
+	var check_mdp bool = CompareMDP(motdepasse, motdepasse_sql)
+
+	fmt.Println("Bool : ", check_mdp)
+
+	///////////////////////////////////////////////////////////
+	// Gestion comparaison mdp et redirect, et message html  //
+	///////////////////////////////////////////////////////////
 	http.Redirect(w, r, "/", http.StatusFound)
-
-	///////////////////////////////////////////////////////////
-	// REQUETE SQL POUR recup INFO base donnée pseudo		 //
-	///////////////////////////////////////////////////////////
-
-	// si pseudo existe
-
-	///////////////////////////////////////////////////////////
-	// REQUETE SQL POUR recup INFO base donnée mdp //
-	///////////////////////////////////////////////////////////
 }
 
 func RetourHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func SubmitDeconnectionHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitDeconnexionHandler(w http.ResponseWriter, r *http.Request) {
 	DeleteCookie(w)
 
 	http.Redirect(w, r, "/", http.StatusFound)

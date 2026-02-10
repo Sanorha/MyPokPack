@@ -1,6 +1,8 @@
 package pokemon
 
 import (
+	"fmt"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -14,15 +16,16 @@ func CreateHashMDP(password string) (string, error) {
 	return string(bytes), err
 }
 
-func CompareMDP(password string) {
-	mdp_baseSQL := []byte("")
-	///////////////////////////////////////////////////////
-	// REQUETE SQL POUR recup MDP sur base donnée		 //
-	///////////////////////////////////////////////////////
+func CompareMDP(motdepasse string, motdepasse_sql string) bool {
+	motdepasse += pepper
 
-	password_bytes := []byte(password)
-	hashedPassword := []byte(mdp_baseSQL)
+	err := bcrypt.CompareHashAndPassword([]byte(motdepasse_sql), []byte(motdepasse))
 
-	bcrypt.CompareHashAndPassword(hashedPassword, password_bytes)
+	fmt.Println("mdp compare : ", err, motdepasse, motdepasse_sql)
 
+	if err == nil {
+		return true
+	} else {
+		return false
+	}
 }
