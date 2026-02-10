@@ -7,14 +7,14 @@ import (
 	"text/template"
 )
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+func HomeHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	tmpl, err := template.ParseFiles("index.html")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, check)
 }
 
 func InscriptionHandler(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +77,7 @@ func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux, 
 
 		if check_mdp {
 			AddCookie(w, pseudo)
+			check.Check_connexion = true
 			http.Redirect(w, r, "/", http.StatusFound)
 		} else {
 			check.Check_mdp = true
@@ -89,8 +90,16 @@ func RetourHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func SubmitDeconnexionHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitDeconnexionHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	DeleteCookie(w)
-
+	check.Check_connexion = false
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+
+func CollectionHandler(w http.ResponseWriter, r *http.Request) {
+
+	/////////////// afficher collection ///////////////////
+}
+
+/////////////// handler ouvrir ///////////////////
+/////////////// ajout base sql ///////////////////

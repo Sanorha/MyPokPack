@@ -13,7 +13,7 @@ func Server() {
 
 	// affiche index.html
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		HomeHandler(w, r)
+		HomeHandler(w, r, &check)
 	})
 
 	// affiche inscription.html
@@ -38,13 +38,20 @@ func Server() {
 
 	// supprime le cookie, redirige sur /
 	http.HandleFunc("/deconnexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitDeconnexionHandler(w, r)
+		SubmitDeconnexionHandler(w, r, &check)
 	})
 
 	// bontou retour redirige sur /
 	http.HandleFunc("/retour", func(w http.ResponseWriter, r *http.Request) {
 		RetourHandler(w, r)
 	})
+
+	// bonton voir collection /
+	http.HandleFunc("/collection", func(w http.ResponseWriter, r *http.Request) {
+		CollectionHandler(w, r)
+	})
+
+	/////////////// handle ouvrir booster ///////////////////
 
 	fs := http.FileServer(http.Dir("./static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))

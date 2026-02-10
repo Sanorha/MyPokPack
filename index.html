@@ -15,15 +15,22 @@
         <div class="menu">
             <button class="jeux" type="button">Menu dresseur ▼</button>
             <div class="menu-content">
-                <a href="/collection">Ma Collection</a>
                 <a href="/inscription">Inscription</a>
                 <a href="/connexion">Connexion</a>
                 <a href="/deconnexion">Déconnexion</a>
+                {{ if .Check_connexion }}
+                    <a href="/collection">Ma Collection</a>
+                {{ end }}
             </div>
         </div>
         </nav> 
+
         <img  class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
-        <button class ="buton">ouvrir</button>
+
+        {{ if .Check_connexion }}
+            <button class ="buton">ouvrir</button>
+        {{ end }}
+        
         <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png">
 
     </form>

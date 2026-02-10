@@ -20,8 +20,9 @@ func InitJeux() Jeux {
 }
 
 type Check struct {
-	Check_pseudo bool
-	Check_mdp    bool
+	Check_pseudo    bool
+	Check_mdp       bool
+	Check_connexion bool
 }
 
 func InitCheck() Check {

@@ -82,3 +82,8 @@ func SearchSQL(pseudo string) string {
 
 	return motdepasse_sql
 }
+
+/////////////// requete base jeux ajouter image //////////
+/////////////// voix max pokemon /////////////////////////
+/////////////// faire fonction random/////////////////////
+/////////////// https://pokeapi.co/api/v2/pokemon/1 //////
