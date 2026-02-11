@@ -20,11 +20,36 @@ func Affiche(jeux *Jeux) {
 		log.Fatal(err)
 	}
 
-	json.NewDecoder(resp.Body).Decode(jeux)
+	type Data struct {
+		Name string `json:"name"`
 
-	fmt.Print("Nom : ", jeux.Name, "\nType : ")
-	for _, t := range jeux.Types {
-		fmt.Print(t.Type.Name, " ")
+		Types []struct {
+			Type struct {
+				Name string `json:"name"`
+			} `json:"type"`
+		} `json:"types"`
+
+		Sprites struct {
+			Other struct {
+				Dream_world struct {
+					Image string `json:"front_default"`
+				} `json:"dream_world"`
+			} `json:"other"`
+		} `json:"sprites"`
 	}
-	fmt.Print("\nAdresse image : ", jeux.Sprites.Other.Dream_world.Image, " ")
+
+	data := Data{}
+
+	json.NewDecoder(resp.Body).Decode(&data)
+	fmt.Println("DATA : ", data)
+
+	types := ""
+
+	for _, t := range data.Types {
+		types += (t.Type.Name + " ")
+	}
+
+	jeux.Name = data.Name
+	jeux.Types = types
+	jeux.Image = data.Sprites.Other.Dream_world.Image
 }

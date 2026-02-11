@@ -30,7 +30,7 @@ func Server() {
 
 	// recup, pseudo, mail, mdp, hash, créer cookie, redirige sur /
 	http.HandleFunc("/submit_inscription", func(w http.ResponseWriter, r *http.Request) {
-		SubmitInscriptionHandler(w, r)
+		SubmitInscriptionHandler(w, r, &check)
 	})
 
 	// recup, pseudo, mdp, compare hash et mdp, créer cookie, redirige sur
@@ -53,7 +53,9 @@ func Server() {
 		CollectionHandler(w, r)
 	})
 
-	/////////////// handle ouvrir booster ///////////////////
+	http.HandleFunc("/booster", func(w http.ResponseWriter, r *http.Request) {
+		OpenBoosterHandler(w, r, &jeux)
+	})
 
 	fs := http.FileServer(http.Dir("./static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
