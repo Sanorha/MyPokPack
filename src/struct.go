@@ -11,21 +11,9 @@ func InitUser() User {
 }
 
 type Jeux struct {
-	Name string `json:"name"`
-
-	Types []struct {
-		Type struct {
-			Name string `json:"name"`
-		} `json:"type"`
-	} `json:"types"`
-
-	Sprites struct {
-		Other struct {
-			Dream_world struct {
-				Image string `json:"front_default"`
-			} `json:"dream_world"`
-		} `json:"other"`
-	} `json:"sprites"`
+	Name  string
+	Types string
+	Image string
 }
 
 func InitJeux() Jeux {

@@ -25,15 +25,16 @@
         </div>
         </nav> 
 
-        <img  class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
+        <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
 
         {{ if .Check_connexion }}
-            <button class ="buton">ouvrir</button>
+            <form action="/booster" method="post">
+                <button class ="buton">ouvrir</button>
+            </form>
         {{ end }}
         
         <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png">
 
-    </form>
         <script>
         function createBall() {
             const container = document.querySelector('.falling-container');
