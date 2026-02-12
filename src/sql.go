@@ -107,7 +107,7 @@ func SearchIdUserSQL(pseudo string) string {
 	return id_sql
 }
 
-func AddJeuxSQL(jeux *Jeux, pseudo_cookie string) {
+func AddJeuxSQL(pokemon_name string, pokemon_types string, pokemon_image string, pseudo_cookie string) {
 	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
 
 	if err != nil {
@@ -120,18 +120,42 @@ func AddJeuxSQL(jeux *Jeux, pseudo_cookie string) {
 
 	_, err = db.Exec(
 		`INSERT INTO jeux (Name, Types, Image, user_id) 
-     	VALUES(?, ?, ?, ?);`, jeux.Name, jeux.Types, jeux.Image, id_pseudo)
+     	VALUES(?, ?, ?, ?);`, pokemon_name, pokemon_types, pokemon_image, id_pseudo)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func SearchJeuxSQL() {
+func SearchJeuxSQL(jeux *Jeux_slice, pseudo_cookie string) {
+	jeux.Jeux_slice = []Jeux{}
 
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	id_pseudo := SearchIdUserSQL(pseudo_cookie)
+
+	defer db.Close()
+
+	rows, err := db.Query(
+		`SELECT Name, Types, Image
+		FROM user u
+		INNER JOIN jeux j
+		ON u.id = j.user_id
+		WHERE u.id = ?;`, id_pseudo)
+
+	for rows.Next() {
+		var data Jeux
+
+		err = rows.Scan(&data.Name, &data.Types, &data.Image)
+
+		jeux.Jeux_slice = append(jeux.Jeux_slice, data)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }
-
-/////////////// requete base jeux ajouter image //////////
-/////////////// voir max pokemon /////////////////////////
-/////////////// faire fonction random/////////////////////
-/////////////// https://pokeapi.co/api/v2/pokemon/1 //////

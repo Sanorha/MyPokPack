@@ -1,0 +1,9 @@
+{{ define "showbooster" }}
+    {{ range .Booster.Booster }}
+        <ul>
+            <img src="{{ .Image }}" width="100"><br>
+            Name : {{ .Name }}<br>
+            Types : {{ .Types }}   
+        </ul>
+    {{ end }}
+{{ end }}
