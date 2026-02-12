@@ -8,14 +8,13 @@ import (
 func Server() {
 	jeux := InitJeux()
 	check := InitCheck()
+	booster := InitBooster()
 
 	CreateTableone()
 
-	// Affiche(&jeux)
-
 	// affiche index.html
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		HomeHandler(w, r, &check)
+		HomeHandler(w, r, &check, &booster)
 	})
 
 	// affiche inscription.html
@@ -33,14 +32,14 @@ func Server() {
 		SubmitInscriptionHandler(w, r, &check)
 	})
 
-	// recup, pseudo, mdp, compare hash et mdp, créer cookie, redirige sur
+	// recup, pseudo, mdp, compare hash et mdp, créer cookie, redirige sur /
 	http.HandleFunc("/submit_connexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitConnexionHandler(w, r, &jeux, &check)
+		SubmitConnexionHandler(w, r, &check)
 	})
 
 	// supprime le cookie, redirige sur /
 	http.HandleFunc("/deconnexion", func(w http.ResponseWriter, r *http.Request) {
-		SubmitDeconnexionHandler(w, r, &check)
+		SubmitDeconnexionHandler(w, r, &check, &booster)
 	})
 
 	// bontou retour redirige sur /
@@ -48,13 +47,19 @@ func Server() {
 		RetourHandler(w, r)
 	})
 
-	// bonton voir collection /
-	http.HandleFunc("/collection", func(w http.ResponseWriter, r *http.Request) {
-		CollectionHandler(w, r)
+	// bonton voir collection redirige sur /collection
+	http.HandleFunc("/showcollection", func(w http.ResponseWriter, r *http.Request) {
+		ShowCollectionHandler(w, r, &jeux)
 	})
 
-	http.HandleFunc("/booster", func(w http.ResponseWriter, r *http.Request) {
-		OpenBoosterHandler(w, r, &jeux)
+	// affiche collection.html
+	http.HandleFunc("/collection", func(w http.ResponseWriter, r *http.Request) {
+		CollectionHandler(w, r, &jeux)
+	})
+
+	// redirige sur / et affiche pokemon
+	http.HandleFunc("/showbooster", func(w http.ResponseWriter, r *http.Request) {
+		OpenBoosterHandler(w, r, &booster)
 	})
 
 	fs := http.FileServer(http.Dir("./static/"))
