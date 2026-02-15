@@ -37,7 +37,7 @@ func ConnexionHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	tmpl.Execute(w, check)
 }
 
-func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, check *Check) {
 	pseudo := r.FormValue("pseudo")
 	motdepasse := r.FormValue("mdp")
 	email := r.FormValue("email")
@@ -54,6 +54,7 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request) {
 
 	AddUser(pseudo, email, motdepasse)
 	AddCookie(w, pseudo)
+	check.Check_connexion = true
 
 	http.Redirect(w, r, "/", http.StatusFound)
 }
@@ -65,7 +66,7 @@ func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux, 
 	pseudo := r.FormValue("pseudo")
 	motdepasse := r.FormValue("mdp")
 
-	var motdepasse_sql string = SearchSQL(pseudo)
+	var motdepasse_sql string = SearchUserSQL(pseudo)
 
 	if motdepasse_sql == "" {
 		check.Check_pseudo = true
@@ -99,6 +100,36 @@ func SubmitDeconnexionHandler(w http.ResponseWriter, r *http.Request, check *Che
 func CollectionHandler(w http.ResponseWriter, r *http.Request) {
 
 	/////////////// afficher collection ///////////////////
+}
+
+func BoosterHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("pages/booster.html")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tmpl.Execute(w, nil)
+}
+
+func OpenBoosterHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux) {
+	for i := 0; i < 7; i++ {
+		Affiche(jeux)
+
+		fmt.Print("Nom : ", jeux.Name, "\nType : ")
+
+		fmt.Print("\nAdresse image : ", jeux.Image, " ")
+
+		if jeux.Image == "" {
+			i--
+		} else {
+			pseudo_cookie := ReadCookie(w, r)
+			AddJeuxSQL(jeux, pseudo_cookie)
+		}
+	}
+
+	http.Redirect(w, r, "/", http.StatusFound)
+	//// fonction pour carte apparaisse sur booster.html////
 }
 
 /////////////// handler ouvrir ///////////////////

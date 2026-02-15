@@ -32,6 +32,7 @@ func CreateTableone() {
 			id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 			Name TEXT NOT NULL,
 			Types TEXT NOT NULL,
+			Image TEXT NOT NULL,
 			user_id INTEGER NOT NULL,
 			FOREIGN KEY (user_id) REFERENCES user(id)
 		);`
@@ -59,7 +60,7 @@ func AddUser(Pseudo string, Email string, Motdepasse string) {
 	}
 }
 
-func SearchSQL(pseudo string) string {
+func SearchUserSQL(pseudo string) string {
 	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
 
 	if err != nil {
@@ -83,7 +84,54 @@ func SearchSQL(pseudo string) string {
 	return motdepasse_sql
 }
 
+func SearchIdUserSQL(pseudo string) string {
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	var id_sql string
+
+	err = db.QueryRow(
+		`SELECT id
+		FROM user
+		WHERE Username = ?;`, pseudo).Scan(&id_sql)
+
+	if err != nil {
+		return ""
+	}
+
+	return id_sql
+}
+
+func AddJeuxSQL(jeux *Jeux, pseudo_cookie string) {
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	id_pseudo := SearchIdUserSQL(pseudo_cookie)
+
+	defer db.Close()
+
+	_, err = db.Exec(
+		`INSERT INTO jeux (Name, Types, Image, user_id) 
+     	VALUES(?, ?, ?, ?);`, jeux.Name, jeux.Types, jeux.Image, id_pseudo)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func SearchJeuxSQL() {
+
+}
+
 /////////////// requete base jeux ajouter image //////////
-/////////////// voix max pokemon /////////////////////////
+/////////////// voir max pokemon /////////////////////////
 /////////////// faire fonction random/////////////////////
 /////////////// https://pokeapi.co/api/v2/pokemon/1 //////
