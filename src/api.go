@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func Affiche(jeux *Jeux) {
+func RandBooster() (string, string, string) {
 	api := "https://pokeapi.co/api/v2/pokemon/"
 
 	url := api + strconv.Itoa(rand.IntN(1025))
@@ -49,7 +49,9 @@ func Affiche(jeux *Jeux) {
 		types += (t.Type.Name + " ")
 	}
 
-	jeux.Name = data.Name
-	jeux.Types = types
-	jeux.Image = data.Sprites.Other.Dream_world.Image
+	pokemon_name := data.Name
+	pokemon_types := types
+	pokemon_image := data.Sprites.Other.Dream_world.Image
+
+	return pokemon_name, pokemon_types, pokemon_image
 }

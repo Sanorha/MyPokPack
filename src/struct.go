@@ -10,14 +10,18 @@ func InitUser() User {
 	return User{}
 }
 
+type Jeux_slice struct {
+	Jeux_slice []Jeux
+}
+
 type Jeux struct {
 	Name  string
 	Types string
 	Image string
 }
 
-func InitJeux() Jeux {
-	return Jeux{}
+func InitJeux() Jeux_slice {
+	return Jeux_slice{}
 }
 
 type Check struct {
@@ -28,4 +32,18 @@ type Check struct {
 
 func InitCheck() Check {
 	return Check{}
+}
+
+type Booster struct {
+	Booster []Pokemon
+}
+
+type Pokemon struct {
+	Name  string
+	Types string
+	Image string
+}
+
+func InitBooster() Booster {
+	return Booster{}
 }
