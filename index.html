@@ -25,7 +25,7 @@
         </div>
         </nav> 
 
-    <!-- delimiter -->
+    {{ if not .Check.Check_openbooster }}
 
         <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
 
@@ -37,10 +37,16 @@
         
         <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png">
 
-    <!-- delimiter -->
- 
+    {{ end }}
+    
+    {{ if .Check.Check_openbooster }}
         {{ template "showbooster" . }}
-
+        
+        <form action="/redirectbooster" method="post">
+            <button class ="buton">Continuer</button>
+        </form>
+    {{ end }}    
+    
     <script>
         function createBall() {
             const container = document.querySelector('.falling-container');
