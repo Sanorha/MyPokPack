@@ -28,6 +28,7 @@ type Check struct {
 	Check_pseudo    bool
 	Check_mdp       bool
 	Check_connexion bool
+	Check_booster   bool
 }
 
 func InitCheck() Check {
