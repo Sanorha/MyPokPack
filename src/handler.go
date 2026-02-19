@@ -108,9 +108,11 @@ func SubmitDeconnexionHandler(w http.ResponseWriter, r *http.Request, check *Che
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func OpenBoosterHandler(w http.ResponseWriter, r *http.Request, booster *Booster) {
+func OpenBoosterHandler(w http.ResponseWriter, r *http.Request, booster *Booster, check *Check) {
 	booster.Booster = []Pokemon{}
 	var data Pokemon
+
+	check.Check_openbooster = true
 
 	for i := 0; i < 5; i++ {
 		pokemon_name, pokemon_types, pokemon_image := RandBooster()
@@ -127,6 +129,11 @@ func OpenBoosterHandler(w http.ResponseWriter, r *http.Request, booster *Booster
 		}
 	}
 
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
+func RedirectBoosterHandler(w http.ResponseWriter, r *http.Request, check *Check) {
+	check.Check_openbooster = false
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
