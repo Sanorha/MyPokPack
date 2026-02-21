@@ -59,12 +59,7 @@ func Server() {
 
 	// redirige sur / et affiche pokemon
 	http.HandleFunc("/showbooster", func(w http.ResponseWriter, r *http.Request) {
-		OpenBoosterHandler(w, r, &booster, &check)
-	})
-
-	// redirige sur / et cache les donnée de pokemon
-	http.HandleFunc("/redirectbooster", func(w http.ResponseWriter, r *http.Request) {
-		RedirectBoosterHandler(w, r, &check)
+		OpenBoosterHandler(w, r, &booster)
 	})
 
 	fs := http.FileServer(http.Dir("./static/"))

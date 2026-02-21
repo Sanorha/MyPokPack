@@ -25,7 +25,15 @@
         </div>
     </nav> 
 
-    <img class="carte" src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
+<<<<<<<<< Temporary merge branch 1
+        <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
+
+        {{ if .Check_connexion }}
+            <form action="/booster" method="post">
+=========
+    <!-- delimiter -->
+
+        <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
 
     {{ if .Check.Check_connexion }}
         <form action="/showbooster" method="post">
@@ -36,10 +44,16 @@
 
         <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png">
 
+<<<<<<<<< Temporary merge branch 1
+        <script>
+=========
+    <!-- delimiter -->
+ 
+        {{ template "showbooster" . }}
+        
         <form action="/redirectbooster" method="post">
-            <button class="buton">Continuer</button>
+            <button class ="buton">Continuer</button>
         </form>
-    {{ else }}
     {{ end }}    
     
     <script>
