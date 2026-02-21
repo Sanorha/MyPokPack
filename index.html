@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="icon" href="https://i.pinimg.com/736x/85/9e/03/859e0396b1c628832ba6b7c47c4a95b5.jpg">
-    <title>JeuxPoekmon</title>
+    <title>Jeux Pokemon</title>
 </head>
 <body>
     <div class="falling-container"></div>
@@ -23,47 +23,32 @@
                 {{ end }}
             </div>
         </div>
-        </nav> 
+    </nav> 
 
-<<<<<<<<< Temporary merge branch 1
-        <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
+    <img class="carte" src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
 
-        {{ if .Check_connexion }}
-            <form action="/booster" method="post">
-=========
-    <!-- delimiter -->
+    {{ if .Check.Check_connexion }}
+        <form action="/showbooster" method="post">
+            <button class="buton">Ouvrir</button>
+        </form>
 
-        <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
+        {{ template "showbooster" . }}
 
-        {{ if .Check.Check_connexion }}
-            <form action="/showbooster" method="post">
-                <button class ="buton">ouvrir</button>
-            </form>
-        {{ end }}
-        
         <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png">
 
-<<<<<<<<< Temporary merge branch 1
-        <script>
-=========
-    <!-- delimiter -->
- 
-        {{ template "showbooster" . }}
-        
         <form action="/redirectbooster" method="post">
-            <button class ="buton">Continuer</button>
+            <button class="buton">Continuer</button>
         </form>
+    {{ else }}
     {{ end }}    
     
     <script>
         function createBall() {
             const container = document.querySelector('.falling-container');
-            
             if(!container) return; 
 
             const ball = document.createElement('img');
             ball.className = 'falling-item';
-            
             ball.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
             
             ball.style.left = Math.random() * 100 + "vw";
@@ -73,7 +58,6 @@
 
             setTimeout(() => { ball.remove(); }, 5000);
         }
-
         setInterval(createBall, 600);
     </script>
 </body>
