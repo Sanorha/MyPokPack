@@ -2,7 +2,6 @@ package pokemon
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"math/rand/v2"
 	"net/http"
@@ -41,9 +40,8 @@ func RandBooster() (string, string, string) {
 	data := Data{}
 
 	json.NewDecoder(resp.Body).Decode(&data)
-	fmt.Println("DATA : ", data)
 
-	types := ""
+	var types string
 
 	for _, t := range data.Types {
 		types += (t.Type.Name + " ")

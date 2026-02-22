@@ -10,7 +10,7 @@ func Server() {
 	check := InitCheck()
 	booster := InitBooster()
 
-	CreateTableone()
+	CreateTableUserJeux()
 
 	// affiche index.html
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

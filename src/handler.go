@@ -1,7 +1,6 @@
 package pokemon
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"text/template"
@@ -63,6 +62,7 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, check *Che
 	var pseudo_sql string = SearchUserSQL(pseudo)
 	var email_sql string = SearchEmailSQL(email)
 
+	// pseudo ou mail deja existant
 	if pseudo_sql == pseudo || email_sql == email {
 		if pseudo_sql == pseudo {
 			check.Check_pseudo_inscription = true
@@ -80,8 +80,6 @@ func SubmitInscriptionHandler(w http.ResponseWriter, r *http.Request, check *Che
 		}
 
 		motdepasse = motdepasse_hash
-
-		println(pseudo, email, motdepasse)
 
 		AddUser(pseudo, email, motdepasse)
 		AddCookie(w, pseudo)
@@ -102,7 +100,6 @@ func SubmitConnexionHandler(w http.ResponseWriter, r *http.Request, check *Check
 
 	if motdepasse_sql == "" {
 		check.Check_pseudo_connection = true
-		fmt.Println("pb pseudo")
 		http.Redirect(w, r, "/connexion", http.StatusFound)
 
 	} else {
@@ -139,13 +136,19 @@ func OpenBoosterHandler(w http.ResponseWriter, r *http.Request, booster *Booster
 	for i := 0; i < 5; i++ {
 		pokemon_name, pokemon_types, pokemon_image := RandBooster()
 
-		//quelque pokemon n'ont pas d'image sur l'API
+		check_pokemon_sql := SearchPokemonSQL(pokemon_name)
+
+		data = Pokemon{pokemon_name, pokemon_types, pokemon_image}
+		booster.Booster = append(booster.Booster, data)
+
+		// quelques pokemons n'ont pas d'image sur l'API
 		if pokemon_image == "" {
 			i--
+		}
+		// evite les doublons sur la base
+		if check_pokemon_sql == pokemon_name {
+			continue
 		} else {
-			data = Pokemon{pokemon_name, pokemon_types, pokemon_image}
-			booster.Booster = append(booster.Booster, data)
-
 			pseudo_cookie := ReadCookie(w, r)
 			AddJeuxSQL(pokemon_name, pokemon_types, pokemon_image, pseudo_cookie)
 		}
@@ -174,5 +177,18 @@ func CollectionHandler(w http.ResponseWriter, r *http.Request, jeux *Jeux_slice)
 		log.Fatal(err)
 	}
 
-	tmpl.Execute(w, jeux)
+	cookie_pseudo := ReadCookie(w, r)
+	nb_pokemon := SearchNbPokemonSQL(cookie_pseudo)
+
+	type Data struct {
+		Jeux       Jeux_slice
+		Nb_pokemon int
+	}
+
+	data := Data{
+		Jeux:       *jeux,
+		Nb_pokemon: nb_pokemon,
+	}
+
+	tmpl.Execute(w, data)
 }

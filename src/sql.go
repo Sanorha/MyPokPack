@@ -7,7 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func CreateTableone() {
+func CreateTableUserJeux() {
 	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
 	if err != nil {
 		log.Fatal(err)
@@ -203,4 +203,53 @@ func SearchJeuxSQL(jeux *Jeux_slice, pseudo_cookie string) {
 			log.Fatal(err)
 		}
 	}
+}
+
+func SearchNbPokemonSQL(pseudo_cookie string) int {
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	id_pseudo := SearchIdUserSQL(pseudo_cookie)
+	var nb_pokemon int
+
+	defer db.Close()
+
+	err = db.QueryRow(
+		`SELECT COUNT(*)
+		FROM user u
+		INNER JOIN jeux j
+		ON u.id = j.user_id
+		WHERE u.id = ?;`, id_pseudo).Scan(&nb_pokemon)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return nb_pokemon
+}
+
+func SearchPokemonSQL(pokemon string) string {
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	var pokemon_sql string
+
+	err = db.QueryRow(
+		`SELECT Name
+		FROM jeux
+		WHERE Name = ?;`, pokemon).Scan(&pokemon_sql)
+
+	if err != nil {
+		return ""
+	}
+
+	return pokemon_sql
 }

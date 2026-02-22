@@ -1,6 +1,6 @@
 {{ define "showcollection" }}
     <div class="pokemons">
-        {{ range .Jeux_slice }}
+        {{ range .Jeux.Jeux_slice }}
             <div class="pokemon">
                 <img src="{{ .Image }}" width="100"><br>
                 Name : {{ .Name }}<br>
