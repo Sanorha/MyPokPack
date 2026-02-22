@@ -60,6 +60,29 @@ func AddUser(Pseudo string, Email string, Motdepasse string) {
 	}
 }
 
+func SearchMdpSQL(pseudo string) string {
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	var motdepasse_sql string
+
+	err = db.QueryRow(
+		`SELECT Motdepasse
+		FROM user
+		WHERE Username = ?;`, pseudo).Scan(&motdepasse_sql)
+
+	if err != nil {
+		return ""
+	}
+
+	return motdepasse_sql
+}
+
 func SearchUserSQL(pseudo string) string {
 	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
 
@@ -70,18 +93,40 @@ func SearchUserSQL(pseudo string) string {
 	defer db.Close()
 
 	var username_sql string
-	var motdepasse_sql string
 
 	err = db.QueryRow(
-		`SELECT Username, Motdepasse
+		`SELECT Username
 		FROM user
-		WHERE Username = ?;`, pseudo).Scan(&username_sql, &motdepasse_sql)
+		WHERE Username = ?;`, pseudo).Scan(&username_sql)
 
 	if err != nil {
 		return ""
 	}
 
-	return motdepasse_sql
+	return username_sql
+}
+
+func SearchEmailSQL(email string) string {
+	db, err := sql.Open("sqlite3", "./donnerprojet.sqlite")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	var email_sql string
+
+	err = db.QueryRow(
+		`SELECT Email
+		FROM user
+		WHERE Email = ?;`, email).Scan(&email_sql)
+
+	if err != nil {
+		return ""
+	}
+
+	return email_sql
 }
 
 func SearchIdUserSQL(pseudo string) string {

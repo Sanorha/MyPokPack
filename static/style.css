@@ -176,10 +176,36 @@ img{
 .menu:hover .jeux {
     background-color: #ffcb05; 
 }
+
 .btn{
     font-size: 15px;
     margin-top: -98px;
     margin-right: 51%;
     border: 2px solid  black;
     border-radius: 15px;
+}
+
+.pokemons{
+    display: flex;
+    flex-direction: row;  
+    flex-wrap: wrap;      
+    gap: 50px 10px;
+}
+
+.pokemon {
+    width: 200px;
+    height: 100px;          /* On passe en auto pour que le cadre s'étire selon le texte */
+    min-height: 150px;     /* Sécurité pour garder une taille minimale */
+    padding: 15px;
+    background: white;
+    border: 2px solid black; /* LE CADRE : 2px, continu, noir */
+    border-radius: 10px;    /* Pour des coins arrondis style carte */
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.2); /* Un petit effet d'ombre pour le relief */
+}
+
+
+.pokemon img {
+    width: 50%;
+    height: 70%;
+    margin: 0px;
 }

@@ -25,9 +25,13 @@ func InitJeux() Jeux_slice {
 }
 
 type Check struct {
-	Check_pseudo    bool
-	Check_mdp       bool
-	Check_connexion bool
+	Check_pseudo_inscription bool
+	Check_email_inscription  bool
+	Check_pseudo_connection  bool
+	Check_mdp_connection     bool
+	Check_connexion          bool
+	Check_booster            bool
+	Check_openbooster        bool
 }
 
 func InitCheck() Check {
