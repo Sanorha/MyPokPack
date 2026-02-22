@@ -183,3 +183,24 @@ img{
     border: 2px solid  black;
     border-radius: 15px;
 }
+.pokemons{
+    display: flex;
+    flex-direction: row;  
+    flex-wrap: wrap;      
+    gap: 30px;
+}
+
+.pokemon {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    text-align: center;
+    background: white;
+}
+
+
+.pokemon img {
+    width: 80%;
+    height: 80%;
+    margin: 15px;
+}
