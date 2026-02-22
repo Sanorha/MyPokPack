@@ -1,9 +1,14 @@
 {{ define "showcollection" }}
     {{ range .Jeux_slice }}
-        <ul>
+<div class="pokemons">
+            <div class="pokemon">
+
             <img src="{{ .Image }}" width="100"><br>
             Name : {{ .Name }}<br>
             Types : {{ .Types }}    
-        </ul>
+                    </div>
+
     {{ end }}
+            </div>
+
 {{ end }}

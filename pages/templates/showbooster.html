@@ -1,9 +1,13 @@
 {{ define "showbooster" }}
+
+<div class="pokemons">
     {{ range .Booster.Booster }}
-        <ul>
-            <img src="{{ .Image }}" width="100"><br>
-            Name : {{ .Name }}<br>
-            Types : {{ .Types }}   
-        </ul>
+        <div class="pokemon">
+            <img src="{{ .Image }}">
+            <p>Name : {{ .Name }}</p>
+            <p>Types : {{ .Types }}</p>
+        </div>
     {{ end }}
+</div>
+
 {{ end }}
