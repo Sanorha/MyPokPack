@@ -15,22 +15,18 @@
         <div class="menu">
             <button class="jeux" type="button">Menu dresseur ▼</button>
             <div class="menu-content">
+                {{ if not .Check.Check_connexion }}
                 <a href="/inscription">Inscription</a>
                 <a href="/connexion">Connexion</a>
-                <a href="/deconnexion">Déconnexion</a>
+                {{ end }}
                 {{ if .Check.Check_connexion }}
+                    <a href="/deconnexion">Déconnexion</a>
                     <a href="/showcollection">Ma Collection</a>
                 {{ end }}
             </div>
         </div>
     </nav> 
 
-<<<<<<<<< Temporary merge branch 1
-        <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
-
-        {{ if .Check_connexion }}
-            <form action="/booster" method="post">
-=========
     <!-- delimiter -->
 
         <img class="carte"src="https://oupi.eu/21460-large_default/pack-3-booster-dimoret-flammes-fantasmagoriques-me02-pokemon.jpg">
@@ -44,18 +40,10 @@
 
         <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/151.png">
 
-<<<<<<<<< Temporary merge branch 1
-        <script>
-=========
     <!-- delimiter -->
  
         {{ template "showbooster" . }}
-        
-        <form action="/redirectbooster" method="post">
-            <button class ="buton">Continuer</button>
-        </form>
-    {{ end }}    
-    
+
     <script>
         function createBall() {
             const container = document.querySelector('.falling-container');

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="icon" href="https://i.pinimg.com/736x/85/9e/03/859e0396b1c628832ba6b7c47c4a95b5.jpg">
-
-    <title>Document</title>
+    <title>JeuxPokemon</title>
 </head>
 <body>
-    <body>
     <div class="falling-container"></div>
 
     <nav class="nav-barre">
@@ -17,34 +15,73 @@
         <div class="menu">
             <button class="jeux" type="button">Menu dresseur ▼</button>
             <div class="menu-content">
-                <a href="/inscription">Inscription</a>
-                <a href="/connexion">Connexion</a>
-                <a href="/deconnexion">Déconnexion</a>
+                {{ if .Check_connexion }}
+                    <a href="/inscription">Inscription</a>
+                    <a href="/connexion">Connexion</a>
+                    <a href="/deconnexion">Déconnexion</a>
+                {{ end }}
                 <a href="/retour">Retour</a>
             </div>
         </div>
     </nav> 
 
     <form action="/submit_connexion" method="post">
-        <label>Pseudo</label>
-        <input type="text" name="pseudo"><br>
+        <div class="from">
+            <label>Pseudo</label>
+            <input type="text" name="pseudo"><br>
 
-        <label>Mot de passe</label>
-        <input type="text" name="mdp"><br>
+            <label>Mot de passe</label>
+            <input type="text" name="mdp"><br>
 
-        <button type="submit">Envoyer</button>
+            <button type="submit">Envoyer</button>
+
+            <span>
+            {{ if .Check_pseudo_connection }}
+                Utilisateur incorrect ou non inscrit
+            {{ end }}
+            </span><br>
+
+            <span>
+            {{ if .Check_mdp_connection }}
+                Mot de passe incorrect
+            {{ end }}
+            </span>
+        </div>
     </form>
 
-    <span>
-    {{ if .Check_pseudo }}
-        Utilisateur incorrect ou non inscrit
-    {{ end }}
-    </span><br>
+    <img src="https://pokemonletsgo.pokemon.com/assets/img/common/char-pikachu.png">
+    <img class="ectoplasma" src="https://www.pokepedia.fr/images/thumb/8/8d/Ectoplasma-RFVF.png/800px-Ectoplasma-RFVF.png">
 
-    <span>
-    {{ if .Check_mdp }}
-        Mot de passe incorrect
-    {{ end }}
-    </span>
+    <script>
+        function createBall() {
+            const container = document.querySelector('.falling-container');
+
+            if(!container) return; 
+
+            const ball = document.createElement('img');
+            ball.className = 'falling-item';
+            
+            const mesImages = [
+            "https://images.pokemontcg.io/base1/4_hires.png", 
+            "https://images.pokemontcg.io/base1/15_hires.png",
+            "https://images.pokemontcg.io/swsh4/44_hires.png", 
+            "https://images.pokemontcg.io/sm12/75_hires.png",  
+            ];
+
+            const indexAuHasard = Math.floor(Math.random() * mesImages.length);
+            ball.src = mesImages[indexAuHasard];
+            
+            ball.style.left = Math.random() * 100 + "vw";
+            ball.style.animationDuration = (Math.random() * 3 + 4) + "s"; 
+            ball.style.width = "40px"; 
+            ball.style.height = "auto";
+            
+            container.appendChild(ball);
+
+            setTimeout(() => { ball.remove(); }, 5000);
+        }
+
+        setInterval(createBall, 900);
+    </script>
 </body>
 </html>

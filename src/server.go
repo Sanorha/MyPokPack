@@ -10,7 +10,7 @@ func Server() {
 	check := InitCheck()
 	booster := InitBooster()
 
-	CreateTableone()
+	CreateTableUserJeux()
 
 	// affiche index.html
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +19,7 @@ func Server() {
 
 	// affiche inscription.html
 	http.HandleFunc("/inscription", func(w http.ResponseWriter, r *http.Request) {
-		InscriptionHandler(w, r)
+		InscriptionHandler(w, r, &check)
 	})
 
 	// affiche connection.html
@@ -59,7 +59,12 @@ func Server() {
 
 	// redirige sur / et affiche pokemon
 	http.HandleFunc("/showbooster", func(w http.ResponseWriter, r *http.Request) {
-		OpenBoosterHandler(w, r, &booster)
+		OpenBoosterHandler(w, r, &booster, &check)
+	})
+
+	// redirige sur / et cache les donnée de pokemon
+	http.HandleFunc("/redirectbooster", func(w http.ResponseWriter, r *http.Request) {
+		RedirectBoosterHandler(w, r, &check)
 	})
 
 	fs := http.FileServer(http.Dir("./static/"))

@@ -15,9 +15,11 @@
         <div class="menu">
             <button class="jeux" type="button">Menu dresseur ▼</button>
             <div class="menu-content">
-                <a href="/inscription">Inscription</a>
-                <a href="/connexion">Connexion</a>
-                <a href="/deconnexion">Déconnexion</a>
+                {{ if .Check_connexion }}
+                    <a href="/inscription">Inscription</a>
+                    <a href="/connexion">Connexion</a>
+                    <a href="/deconnexion">Déconnexion</a>
+                {{ end }}
                 <a href="/retour">Retour</a>
             </div>
         </div>
@@ -27,14 +29,32 @@
         <div class="from">
             <label>Pseudo</label>
             <input type="text" name="pseudo"><br>
+
             <label>Mot de passe</label>
-            <input type="password" name="mdp"><br> <label>Email</label>
+            <input type="password" name="mdp"><br>
+
+            <label>Email</label>
             <input type="email" name="email"><br>
+
             <button type="submit">Envoyer</button>
+
+            <span>
+            {{ if .Check_pseudo_inscription }}
+                Utilisateur déjà existant.
+            {{ end }}
+            </span><br>
+
+            <span>
+            {{ if .Check_email_inscription }}
+                Email déjà existant.
+            {{ end }}
+            </span>
         </div>
     </form>
+
     <img src="https://pokemonletsgo.pokemon.com/assets/img/common/char-pikachu.png">
     <img class="ectoplasma" src="https://www.pokepedia.fr/images/thumb/8/8d/Ectoplasma-RFVF.png/800px-Ectoplasma-RFVF.png">
+
     <script>
         function createBall() {
             const container = document.querySelector('.falling-container');
